@@ -1,0 +1,70 @@
+#when the mapping string contains a bad local path (e.g. does not exist do the following)
+# 	SKIP: display a warning and map the remaining lines.  This mapping will not be processed
+# 	HALT: dispay an error and stop the program
+	ON_BAD_LOCAL_ENTRY=SKIP
+# 	when the mapping string contains a bad server entry (e.g. not accessable)
+# 	SKIP: display a warning and map the remaining lines.  This mapping will not be processed
+# 	HALT: dispay an error and stop the program
+	ON_BAD_REMOTE_HOST_ENTRY=SKIP
+# 	when the mapping string contains a bad server path entry (e.g. path on remote host does not exist)
+# 	SKIP: display a warning and map the remaining lines.  This mapping will not be processed
+# 	CREATE: dispay an error and stop the program
+# 	HALT: dispaly an error and stop the program
+	ON_BAD_REMOTE_PATH_ENTRY=CREATE
+# verbosity settings
+# 	0 No Noise at all
+# 	1 Just startup messaging
+# 	5 include RSYNC flows
+	VERBOSITY=1
+#-------------------------
+# ALERTING
+# 	The sound file to play before the transfer begins
+# 	<file> this file will be played
+# 	NONE: No action taken
+	BEFORESOUND=/System/Library/Sounds/Basso.aiff
+# 	The sound file to play after the transfer completes
+# 	<file> this file will be played
+# 	NONE: No action taken
+	AFTERSOUND=/System/Library/Sounds/Blow.aiff
+# A banner (notification banner like growl) can be displayed.
+# 	0: disable the banner
+# 	<number_greaterthan_0> display the banner for this time
+# 	NONE: disables this feature
+	BEFOREBANNER=3
+	AFTERBANNER=3
+#On OSX we can display the stderr and stdout logs after clicking on a banner.  This has been tested with iterm and terminal.  
+# 	terminal: use OSX's native termial to display the log file
+# 	iterm: use iterm
+	BANNER_OSXLOGVIEWPROGRAM=terminal
+
+# format is basically a scp format followed by a couple of varribles (spaces sperae each filed)
+# LOCALPATH REMOTEHOST:REMOTEPATH RDIREC EDIREC
+#   LOCALPATH is the path to the local directory or file
+#   REMOTEHOST is the hostname for the remote computer found in your ~/.ssh/config.  (you must have a passwordless method of access within your ssh/config file)
+#   REMOTEPATH is the path to the local directory or file
+#	RDIREC is a simplified directive for rsync:
+#   	- MIRROR: the remote path will be a perfect mirror of the local path (unique remote files and directories will be deleted, local directory is MASTER)
+#   	- UPDATE: the remote path will recieve changes from the local path, (unique remote files and directories will remain)
+# 	    - BIMIRROR: the remote path and local path will mirror each other.  changes to local and remote will be reflected on both sides.
+#   EDIREC Exclude directive for the rsync.  It is frequently useful to exclude certain local paths and files from the remote path.  This parameter can be two types of arguments.
+#       - GIT: simple directive to just ignore the .git directory
+#       - <path>: provide a file path to be used by rsyncs --exclude-from directive
+#       - NONE: no exclude feature
+#/Users/travis/workspace/meta-pelion-edge CruzBuild:~/travis/projects/YOCTO/2.1/poky/meta-pelion-edge MIRROR GIT
+
+#~/workspace/meta-pelion-edge CruzBuild:~/travis/TEST/NONE/ MIRROR NONE
+
+#~/workspace/meta-pelion-edge CruzBuild:~/travis/TEST/GIT/ MIRROR GIT
+
+#~/workspace/meta-pelion-edge/ftest CruzBuild:~/travis/TEST/ MIRROR GIT
+
+~/workspace/something CruzBuild:~/travis/TEST/argus MIRROR GIT
+
+
+
+
+
+
+
+#how often to check remote servers for a change
+#bimirror_check_cycle=5
